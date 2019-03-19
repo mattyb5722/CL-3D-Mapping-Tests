@@ -17,7 +17,10 @@ public class Test3 : MonoBehaviour
     public GameObject player1;
     private float x = 500f;
     //private float y = 1200f;
-    private float y = 600f;
+    private float y = 500f;
+
+    public Boolean online;
+    public Boolean labFormat;
 
     /*
     Lab Format
@@ -29,7 +32,10 @@ public class Test3 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        server = new WebSocket("ws://ec2-18-218-100-236.us-east-2.compute.amazonaws.com:8081");
+        if (online)
+        {
+            server = new WebSocket("ws://ec2-18-218-100-236.us-east-2.compute.amazonaws.com:8081");
+        }
     }
 
     private void Connection()
@@ -51,6 +57,19 @@ public class Test3 : MonoBehaviour
         server.Connect();
     }
 
+    private void FixedUpdate()
+    {
+        if (Time.fixedTime % 1 == 0)
+        {
+            if (running && !online)
+            {
+                y += 50f;
+                print("y: " + y + " x:" + x);
+            }
+        }
+    }
+
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -58,21 +77,27 @@ public class Test3 : MonoBehaviour
             if (running)
             {
                 running = false;
-                server.Close();
+                if (online)
+                {
+                    server.Close();
+                }
             }
             else
             {
                 running = true;
-                Connection();
+                if (online)
+                {
+                    Connection();
+                }
             }
             print("Running: " + running);
         }
-        if (y < 600)
+        if (y < 500)
         {
-           y = 600;
-        }else if (y > 1800)
+           y = 500;
+        }else if (y > 1900)
         {
-            y = 1800;
+            y = 1900;
         }if (x < 500)
         {
             x = 500;
