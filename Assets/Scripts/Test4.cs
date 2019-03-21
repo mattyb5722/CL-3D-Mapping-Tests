@@ -15,8 +15,8 @@ public class Test4 : MonoBehaviour
 
 
     public GameObject player;
-    private float x;
-    private float y;
+    private float x = 1200;
+    private float y = 1200;
 
     public Boolean online;
     public Boolean labFormat;
@@ -31,8 +31,11 @@ public class Test4 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        x = player.transform.position.x;
-        y = player.transform.position.z;
+        x = player.transform.position.x*10;
+        print(x);
+        y = player.transform.position.z*-10;
+        print(y);
+
         if (online)
         {
             server = new WebSocket("ws://ec2-18-218-100-236.us-east-2.compute.amazonaws.com:8081");
@@ -72,7 +75,7 @@ public class Test4 : MonoBehaviour
             {
                 //y += 50f;
                 //print("y: " + y + " x:" + x);
-                player.transform.position = UnityEngine.Random.insideUnitSphere * 50;
+                //player.transform.position = UnityEngine.Random.insideUnitSphere * 50;
                 x += UnityEngine.Random.Range(-50f, 50f);
                 y += UnityEngine.Random.Range(-50f, 50f);
             }
